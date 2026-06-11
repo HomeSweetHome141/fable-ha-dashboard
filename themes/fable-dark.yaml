@@ -1,3 +1,81 @@
+# IMPORTANT: theme gradients require card-mod loaded as a frontend module.
+# Add this to configuration.yaml (see README):
+#
+#   frontend:
+#     themes: !include_dir_merge_named themes
+#     extra_module_url:
+#       - /hacsfiles/lovelace-card-mod/card-mod.js
+#
+fable-dark:
+  # ── Backgrounds ──────────────────────────────────────
+  primary-background-color: "#171614"
+  secondary-background-color: "#1d1c1a"
+  card-background-color: "#1c1b19"
+  ha-card-background: "#1c1b19"
+  lovelace-background: "#171614"
+
+  # ── Text ─────────────────────────────────────────────
+  primary-text-color: "#ece8e2"
+  secondary-text-color: "#aaa39a"
+  text-primary-color: "#ece8e2"
+  disabled-text-color: "#716c66"
+
+  # ── Accents ──────────────────────────────────────────
+  primary-color: "#4f98a3"
+  accent-color: "#4f98a3"
+  light-primary-color: "#72a7db"
+  dark-primary-color: "#227f8b"
+  state-icon-color: "#4f98a3"
+  state-icon-active-color: "#e8af34"
+  success-color: "#78b355"
+  warning-color: "#e8af34"
+  error-color: "#dd6974"
+  info-color: "#72a7db"
+
+  # ── Borders / dividers / radius ──────────────────────
+  ha-card-border-radius: "20px"
+  ha-card-border-color: "#393836"
+  ha-card-border-width: "1px"
+  divider-color: "#262523"
+
+  # ── Sidebar ──────────────────────────────────────────
+  sidebar-background-color: "#1c1b19"
+  sidebar-icon-color: "#aaa39a"
+  sidebar-text-color: "#aaa39a"
+  sidebar-selected-icon-color: "#4f98a3"
+  sidebar-selected-text-color: "#4f98a3"
+
+  # ── Header ───────────────────────────────────────────
+  app-header-background-color: "rgba(23, 22, 20, 0.84)"
+  app-header-text-color: "#ece8e2"
+
+  # ── Sliders / toggles ────────────────────────────────
+  slider-color: "#4f98a3"
+  slider-track-color: "#2d2c2a"
+  switch-checked-color: "#4f98a3"
+  switch-unchecked-track-color: "#2d2c2a"
+
+  # ── Mushroom hooks ───────────────────────────────────
+  mush-rgb-state-entity: "79, 152, 163"
+  mush-rgb-green: "120, 179, 85"
+  mush-rgb-amber: "232, 175, 52"
+  mush-rgb-red: "221, 105, 116"
+  mush-rgb-blue: "114, 167, 219"
+
+  # ── Gradient card styling (requires card-mod as frontend module) ──
+  # Applies the surface gradient + translucent border from the
+  # original HTML design to every ha-card globally.
+  card-mod-theme: fable-dark
+  card-mod-card: |
+    ha-card {
+      background: linear-gradient(180deg, #242320 0%, #1c1b19 55%, #191815 100%);
+      border: 1px solid rgba(236, 232, 226, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.32);
+    }
+  card-mod-view: |
+    hui-sections-view {
+      background: #171614;
+    }
 fable-dark:
   # ── Backgrounds ──────────────────────────────────────
   primary-background-color: "#171614"
