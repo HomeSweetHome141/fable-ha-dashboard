@@ -1,0 +1,197 @@
+# ─────────────────────────────────────────────────────────────
+# Fable Dark — Overview Dashboard
+#
+# HOW TO INSTALL
+#   1. Settings > Dashboards > Add Dashboard > New dashboard from scratch
+#   2. Open it > pencil icon > three-dot menu > Raw configuration editor
+#   3. Paste this entire file and save
+#
+# RELINKING ENTITIES
+#   Every entity below is a SAMPLE/PLACEHOLDER. The dashboard is a
+#   native "sections" view, so you can edit it entirely in the UI:
+#   pencil icon > click any card > swap the entity from the dropdown.
+#   See README.md for the full entity map.
+# ─────────────────────────────────────────────────────────────
+title: Home
+views:
+  - title: Overview
+    path: overview
+    icon: mdi:view-dashboard
+    type: sections
+    max_columns: 3
+    sections:
+
+      # ══ Column 1 — Solar & Battery ════════════════════
+      - type: grid
+        cards:
+          - type: heading
+            heading: Solar & Battery
+            icon: mdi:solar-power-variant
+
+          - type: gauge
+            entity: sensor.battery_state_of_charge
+            name: Battery
+            unit: "%"
+            min: 0
+            max: 100
+            severity:
+              green: 50
+              yellow: 25
+              red: 0
+            grid_options:
+              columns: 12
+              rows: 4
+            card_mod:
+              style: |
+                ha-card {
+                  background: radial-gradient(circle at top, #2a3738, transparent 55%),
+                              linear-gradient(180deg, #1c1b19, #201f1d);
+                }
+
+          - type: custom:mushroom-entity-card
+            entity: sensor.solar_pv_power
+            name: PV Power
+            icon: mdi:solar-power
+            icon_color: amber
+
+          - type: custom:mushroom-entity-card
+            entity: sensor.grid_import_power
+            name: Grid Import
+            icon: mdi:transmission-tower-import
+            icon_color: red
+
+          - type: custom:mushroom-entity-card
+            entity: sensor.grid_export_power
+            name: Grid Export
+            icon: mdi:transmission-tower-export
+            icon_color: green
+
+          - type: heading
+            heading: Tesla
+            icon: mdi:car-electric
+
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.tesla_sentry_mode
+            name: Sentry Mode
+            icon: mdi:shield-car
+            icon_color: green
+
+          - type: custom:mushroom-entity-card
+            entity: lock.tesla_doors
+            name: Vehicle
+            icon: mdi:car-key
+
+          - type: custom:mushroom-entity-card
+            entity: sensor.tesla_battery_level
+            name: Battery
+            icon: mdi:battery-high
+            icon_color: green
+
+          - type: custom:mushroom-entity-card
+            entity: sensor.tesla_interior_temperature
+            name: Interior
+            icon: mdi:thermometer
+            icon_color: blue
+
+      # ══ Column 2 — Security ═════════════════════════
+      - type: grid
+        cards:
+          - type: heading
+            heading: Security
+            icon: mdi:shield-home
+
+          - type: custom:mushroom-alarm-control-panel-card
+            entity: alarm_control_panel.home_alarm
+            states:
+              - armed_home
+              - armed_away
+            card_mod:
+              style: |
+                ha-card {
+                  background: linear-gradient(135deg,
+                    rgba(120, 179, 85, 0.16), #1c1b19 60%);
+                  border: 1px solid rgba(120, 179, 85, 0.25);
+                }
+
+          - type: custom:mushroom-entity-card
+            entity: lock.front_door
+            name: Front Door
+            icon: mdi:door-closed-lock
+
+          - type: custom:mushroom-entity-card
+            entity: lock.back_door
+            name: Back Door
+            icon: mdi:door-closed-lock
+
+          - type: custom:mushroom-entity-card
+            entity: cover.garage_door
+            name: Garage Door
+            icon: mdi:garage
+
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.motion_sensors
+            name: Motion Sensors
+            icon: mdi:motion-sensor
+
+      # ══ Column 3 — Energy Income + Locations ════════════
+      - type: grid
+        cards:
+          - type: custom:apexcharts-card
+            header:
+              show: true
+              title: Energy Income (30 Days)
+              show_states: true
+              colorize_states: true
+            graph_span: 30d
+            span:
+              end: day
+            apex_config:
+              chart:
+                height: 300
+              plotOptions:
+                bar:
+                  borderRadius: 2
+                  columnWidth: "60%"
+              grid:
+                borderColor: "#262523"
+              xaxis:
+                labels:
+                  style:
+                    colors: "#aaa39a"
+              yaxis:
+                labels:
+                  style:
+                    colors: "#aaa39a"
+            series:
+              - entity: sensor.daily_energy_income
+                name: Net Income
+                type: column
+                group_by:
+                  func: last
+                  duration: 1d
+                color_threshold:
+                  - value: -1000
+                    color: "#dd6974"
+                  - value: 0
+                    color: "#78b355"
+            grid_options:
+              columns: 12
+              rows: 6
+            card_mod:
+              style: |
+                ha-card {
+                  background: linear-gradient(180deg, #1c1b19, #201f1d);
+                  border: 1px solid rgba(236, 232, 226, 0.08);
+                }
+
+          - type: heading
+            heading: Locations
+            icon: mdi:map-marker-radius
+
+          - type: custom:mushroom-person-card
+            entity: person.mike
+            use_entity_picture: true
+
+          - type: custom:mushroom-person-card
+            entity: person.sarah
+            use_entity_picture: true
